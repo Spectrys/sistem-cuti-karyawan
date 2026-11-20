@@ -1,17 +1,3 @@
--- =====================================================================
---  SISTEM MANAJEMEN CUTI KARYAWAN | PostgreSQL (versi sederhana)
---  Jalankan:
---    createdb cuti_karyawan
---    psql -d cuti_karyawan -f database.sql
---  Atau pgAdmin: buat database kosong -> Query Tool -> jalankan file ini.
---
---  Password semua akun seed: password123
---  Akun: admin, hrd, kadiv_it, kadiv_mkt, andi, dewi, rudi, maya
---
---  Isi file ini: BAGIAN 1 = DDL, BAGIAN 2 = DML (data awal)
---  Contoh query untuk aplikasi ada di queries.sql
--- =====================================================================
-
 -- Hapus tabel lama (tabel anak dulu) supaya file bisa dijalankan ulang
 DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS leave_approvals;

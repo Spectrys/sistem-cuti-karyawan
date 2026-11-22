@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ruang Cuti
 
-## Getting Started
+Aplikasi sederhana untuk mengajukan dan memantau cuti karyawan dengan peran
+karyawan, kepala divisi, HRD, dan administrator.
 
-First, run the development server:
+## Menjalankan secara lokal
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Gunakan Node.js yang didukung Next.js 16 dan PostgreSQL.
+2. Salin `.env.example` menjadi `.env.local`, lalu isi `DATABASE_URL` dan
+   `SESSION_SECRET` (minimal 32 karakter acak).
+3. Buat database kosong `cuti_karyawan`, lalu jalankan `database/database.sql`
+   melalui pgAdmin atau `psql -d cuti_karyawan -f database/database.sql`.
+   **Perhatian:** skrip SQL ini menghapus lalu membuat ulang tabel aplikasi;
+   gunakan hanya pada database pengembangan yang boleh di-reset.
+4. Pasang dependensi dan jalankan aplikasi:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+5. Buka `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Database demo memiliki password `password123`. Username yang tersedia:
+`admin`, `hrd`, `kadiv_it`, `kadiv_mkt`, `andi`, `dewi`, `rudi`, dan `maya`.
+Ganti kredensial demo sebelum aplikasi dipakai sungguhan.
 
-## Learn More
+## Pemeriksaan koneksi database
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Setelah `.env.local` terisi, jalankan `SELECT * FROM users;` melalui pgAdmin
+atau `psql` untuk memastikan database seed sudah tersedia.

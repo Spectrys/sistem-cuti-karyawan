@@ -1,0 +1,27 @@
+import { StatusBadge } from "@/components/ui/StatusBadge";
+
+const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "Asia/Jakarta",
+});
+
+export function LeaveRequestCard({ request }) {
+  const start = dateFormatter.format(new Date(request.start_date));
+  const end = dateFormatter.format(new Date(request.end_date));
+
+  return (
+    <article className="request-row">
+      <div>
+        <div className="request-title">{request.leave_type}</div>
+        <div className="request-meta">
+          {request.full_name ? `${request.full_name} · ` : ""}
+          {start} – {end} · {request.total_days} hari
+        </div>
+        {request.reason ? <div className="request-reason">{request.reason}</div> : null}
+      </div>
+      <StatusBadge status={request.status} />
+    </article>
+  );
+}

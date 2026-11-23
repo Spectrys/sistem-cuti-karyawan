@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
 const dateFormatter = new Intl.DateTimeFormat("id-ID", {
@@ -12,7 +13,7 @@ export function LeaveRequestCard({ request }) {
   const end = dateFormatter.format(new Date(request.end_date));
 
   return (
-    <article className="request-row">
+    <Link className="request-row" href={`/leaves/${request.id}`}>
       <div>
         <div className="request-title">{request.leave_type}</div>
         <div className="request-meta">
@@ -22,6 +23,6 @@ export function LeaveRequestCard({ request }) {
         {request.reason ? <div className="request-reason">{request.reason}</div> : null}
       </div>
       <StatusBadge status={request.status} />
-    </article>
+    </Link>
   );
 }

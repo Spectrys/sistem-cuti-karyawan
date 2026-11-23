@@ -25,6 +25,16 @@ export function AppShell({ user, children }) {
             <span className="nav-icon" aria-hidden="true">⌂</span>
             Dashboard
           </Link>
+          <Link className="nav-item" href="/leaves">
+            <span className="nav-icon" aria-hidden="true">□</span>
+            Pengajuan cuti
+          </Link>
+          {["division_head", "hrd", "admin"].includes(user.role) ? (
+            <Link className="nav-item" href="/approvals">
+              <span className="nav-icon" aria-hidden="true">✓</span>
+              Persetujuan
+            </Link>
+          ) : null}
         </nav>
         <div className="sidebar-bottom">
           <div>

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
 import { LeaveRequestCard } from "@/components/leave/LeaveRequestCard";
 import { StatCard } from "@/components/ui/StatCard";
+import Link from "next/link";
 import { getCurrentUser } from "@/lib/session";
 import { getDashboardData } from "@/lib/leave";
 
@@ -51,6 +52,9 @@ export default async function Home() {
           <h1>{copy.title}</h1>
           <p>Halo, {user.full_name}. {copy.description}</p>
         </div>
+        {user.role === "employee" || user.role === "division_head" ? (
+          <Link className="button" href="/leaves/new">Ajukan cuti</Link>
+        ) : null}
       </div>
 
       <section className="stats-grid" aria-label="Ringkasan cuti">

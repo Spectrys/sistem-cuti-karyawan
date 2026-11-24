@@ -25,6 +25,13 @@ const roleCopy = {
   },
 };
 
+const queueTitles = {
+  employee: "Pengajuan terbaru",
+  division_head: "Pengajuan tim menunggu persetujuan",
+  hrd: "Pengajuan menunggu HRD",
+  admin: "Pengajuan yang masih terbuka",
+};
+
 export default async function Home() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
@@ -39,7 +46,7 @@ export default async function Home() {
           { label: "Pengajuan tahun ini", value: dashboard.total, note: "Semua jenis cuti" },
         ]
       : [
-          { label: "Menunggu persetujuan", value: dashboard.pending, note: "Perlu ditinjau" },
+          { label: user.role === "division_head" ? "Menunggu ketua divisi" : user.role === "hrd" ? "Menunggu HRD" : "Belum selesai", value: dashboard.pending, note: user.role === "division_head" ? "Divisi Anda" : "Perlu ditinjau" },
           { label: "Pengajuan tahun ini", value: dashboard.total, note: "Semua status" },
           { label: "Karyawan", value: dashboard.employees, note: "Dalam cakupan Anda" },
         ];
@@ -66,7 +73,7 @@ export default async function Home() {
       <section className="panel" aria-labelledby="requests-heading">
         <div className="panel-heading">
           <h2 id="requests-heading">
-            {user.role === "employee" ? "Pengajuan terbaru" : "Pengajuan yang perlu ditinjau"}
+            {queueTitles[user.role]}
           </h2>
         </div>
         {dashboard.requests.length ? (

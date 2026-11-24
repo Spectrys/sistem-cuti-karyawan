@@ -29,3 +29,9 @@ Ganti kredensial demo sebelum aplikasi dipakai sungguhan.
 
 Setelah `.env.local` terisi, jalankan `SELECT * FROM users;` melalui pgAdmin
 atau `psql` untuk memastikan database seed sudah tersedia.
+
+## CMS administrator
+
+Masuk sebagai `admin`, lalu buka **Kelola sistem** untuk mengelola jenis cuti,
+akun pengguna, dan divisi. Akun dengan riwayat pengajuan serta divisi yang
+masih beranggota tidak dapat dihapus untuk menjaga relasi data.

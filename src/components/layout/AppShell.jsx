@@ -35,6 +35,12 @@ export function AppShell({ user, children }) {
               Persetujuan
             </Link>
           ) : null}
+          {user.role === "admin" ? (
+            <Link className="nav-item" href="/admin/leave-types">
+              <span className="nav-icon" aria-hidden="true">⚙</span>
+              Kelola sistem
+            </Link>
+          ) : null}
         </nav>
         <div className="sidebar-bottom">
           <div>

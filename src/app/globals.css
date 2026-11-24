@@ -433,6 +433,79 @@ input {
   background: var(--green-light);
 }
 
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.admin-form {
+  display: grid;
+  max-width: 760px;
+  gap: 16px;
+  padding: 22px;
+}
+
+.admin-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: #4a5148;
+  font-size: 13px;
+}
+
+.admin-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.admin-options input {
+  accent-color: var(--green);
+}
+
+.admin-filter {
+  display: flex;
+  max-width: 520px;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.admin-filter .input {
+  flex: 1;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  color: var(--green);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.text-button:disabled {
+  color: #a4aaa1;
+  cursor: not-allowed;
+}
+
+.text-danger {
+  color: #9e4a3d;
+}
+
+.admin-members {
+  margin-top: 20px;
+}
+
 .text-link {
   color: var(--green);
   font-weight: 700;
@@ -737,6 +810,14 @@ input {
 
   .approval-note {
     width: 100%;
+  }
+
+  .admin-filter {
+    width: 100%;
+  }
+
+  .table-actions {
+    justify-content: flex-start;
   }
 }
 

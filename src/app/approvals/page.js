@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { forbidden, redirect } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
 import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -11,12 +11,10 @@ import { formatLeaveDate } from "@/lib/date";
 export default async function ApprovalsPage({ searchParams }) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
-  if (!["division_head", "hrd", "admin"].includes(user.role)) redirect("/");
+  if (!["division_head", "hrd"].includes(user.role)) forbidden();
 
   const params = await searchParams;
-  const status =
-    user.role === "division_head" ? "pending" :
-    ["hrd", "admin"].includes(user.role) ? "approval_queue" : "";
+  const status = user.role === "division_head" ? "pending" : "approval_queue";
   const requests = await getLeaveRequests(user, status);
 
   const columns = [

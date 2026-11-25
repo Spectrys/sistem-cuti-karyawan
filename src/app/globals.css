@@ -295,6 +295,25 @@ input {
   text-align: center;
 }
 
+.route-error {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.route-error h1,
+.route-error p {
+  margin: 0;
+}
+
+.route-error p {
+  color: var(--muted);
+}
+
 .modal-backdrop {
   position: fixed;
   z-index: 20;

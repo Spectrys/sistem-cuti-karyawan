@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { forbidden, notFound, redirect } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { cancelLeaveAction } from "@/app/actions";
@@ -11,8 +11,10 @@ export default async function LeaveDetailPage({ params }) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
   const routeParams = await params;
-  const data = await getLeaveDetail(Number(routeParams.id));
-  if (!data) redirect("/leaves");
+  const requestId = Number(routeParams.id);
+  if (!Number.isInteger(requestId) || requestId < 1) notFound();
+  const data = await getLeaveDetail(requestId);
+  if (!data) notFound();
 
   const { request, approvals } = data;
   const canView =
@@ -20,7 +22,7 @@ export default async function LeaveDetailPage({ params }) {
     user.role === "hrd" ||
     request.user_id === user.id ||
     (user.role === "division_head" && request.division_id === user.division_id);
-  if (!canView) redirect("/leaves");
+  if (!canView) forbidden();
 
   const canCancel =
     request.user_id === user.id &&

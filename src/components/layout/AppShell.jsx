@@ -29,7 +29,11 @@ export function AppShell({ user, children }) {
             <span className="nav-icon" aria-hidden="true">□</span>
             Pengajuan cuti
           </Link>
-          {["division_head", "hrd", "admin"].includes(user.role) ? (
+          <Link className="nav-item" href="/profile">
+            <span className="nav-icon" aria-hidden="true">○</span>
+            Profil
+          </Link>
+          {["division_head", "hrd"].includes(user.role) ? (
             <Link className="nav-item" href="/approvals">
               <span className="nav-icon" aria-hidden="true">✓</span>
               Persetujuan

@@ -1,7 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import { forbidden, redirect } from "next/navigation";
 import { authenticate, createSessionToken } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
@@ -44,6 +45,33 @@ export async function logoutAction() {
 
 function cleanText(value, maxLength = 255) {
   return String(value ?? "").trim().slice(0, maxLength);
+}
+
+export async function updateProfileAction(formData) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+
+  const fullName = cleanText(formData.get("fullName"), 150);
+  const email = cleanText(formData.get("email"), 150).toLowerCase();
+  const phone = cleanText(formData.get("phone"), 30) || null;
+  const address = cleanText(formData.get("address"), 500) || null;
+  if (!fullName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    redirect("/profile?error=invalid");
+  }
+
+  try {
+    await db.query(
+      `UPDATE users SET full_name=$2, email=$3, phone=$4, address=$5 WHERE id=$1`,
+      [user.id, fullName, email, phone, address],
+    );
+  } catch (error) {
+    if (error.code === "23505") redirect("/profile?error=duplicate");
+    throw error;
+  }
+
+  revalidatePath("/");
+  revalidatePath("/profile");
+  redirect("/profile?success=saved");
 }
 
 export async function submitLeaveAction(formData) {
@@ -220,6 +248,7 @@ export async function cancelLeaveAction(formData) {
 export async function decideLeaveAction(formData) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
+  if (!["division_head", "hrd"].includes(user.role)) forbidden();
 
   const requestId = Number(formData.get("requestId"));
   const decision = formData.get("decision");
@@ -260,7 +289,7 @@ export async function decideLeaveAction(formData) {
         "UPDATE leave_requests SET status = $2 WHERE id = $1",
         [requestId, nextStatus],
       );
-    } else if (user.role === "hrd" || user.role === "admin") {
+    } else if (user.role === "hrd") {
       if (request.status !== "approved_by_leader") {
         throw new Error("invalid");
       }
@@ -280,7 +309,8 @@ export async function decideLeaveAction(formData) {
       throw new Error("forbidden");
     }
   }).catch((error) => {
-    redirect(`/approvals?error=${error.message === "forbidden" ? "forbidden" : "invalid"}`);
+    if (error.message === "forbidden") forbidden();
+    redirect("/approvals?error=invalid");
   });
 
   redirect("/approvals?success=decided");

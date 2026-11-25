@@ -5,13 +5,7 @@ import { DataTable } from "@/components/ui/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getCurrentUser } from "@/lib/session";
 import { getLeaveRequests } from "@/lib/leave";
-
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "Asia/Jakarta",
-});
+import { formatLeaveDate } from "@/lib/date";
 
 export default async function LeavesPage({ searchParams }) {
   const user = await getCurrentUser();
@@ -25,7 +19,7 @@ export default async function LeavesPage({ searchParams }) {
       key: "period",
       label: "Tanggal",
       render: (row) =>
-        `${dateFormatter.format(new Date(row.start_date))} – ${dateFormatter.format(new Date(row.end_date))}`,
+        `${formatLeaveDate(row.start_date)} – ${formatLeaveDate(row.end_date)}`,
     },
     { key: "total_days", label: "Durasi", render: (row) => `${row.total_days} hari` },
     { key: "status", label: "Status", render: (row) => <StatusBadge status={row.status} /> },

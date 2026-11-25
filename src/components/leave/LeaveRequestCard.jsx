@@ -1,16 +1,10 @@
 import Link from "next/link";
 import { StatusBadge } from "@/components/ui/StatusBadge";
-
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "Asia/Jakarta",
-});
+import { formatLeaveDate } from "@/lib/date";
 
 export function LeaveRequestCard({ request }) {
-  const start = dateFormatter.format(new Date(request.start_date));
-  const end = dateFormatter.format(new Date(request.end_date));
+  const start = formatLeaveDate(request.start_date);
+  const end = formatLeaveDate(request.end_date);
 
   return (
     <Link className="request-row" href={`/leaves/${request.id}`}>

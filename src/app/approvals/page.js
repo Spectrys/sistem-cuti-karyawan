@@ -6,6 +6,7 @@ import { Alert } from "@/components/ui/Alert";
 import { decideLeaveAction } from "@/app/actions";
 import { getCurrentUser } from "@/lib/session";
 import { getLeaveRequests } from "@/lib/leave";
+import { formatLeaveDate } from "@/lib/date";
 
 export default async function ApprovalsPage({ searchParams }) {
   const user = await getCurrentUser();
@@ -24,7 +25,7 @@ export default async function ApprovalsPage({ searchParams }) {
     {
       key: "period",
       label: "Tanggal",
-      render: (row) => `${row.start_date} – ${row.end_date}`,
+      render: (row) => `${formatLeaveDate(row.start_date)} – ${formatLeaveDate(row.end_date)}`,
     },
     { key: "total_days", label: "Hari", render: (row) => `${row.total_days}` },
     { key: "status", label: "Status", render: (row) => <StatusBadge status={row.status} /> },

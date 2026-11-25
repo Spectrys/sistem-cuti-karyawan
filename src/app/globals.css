@@ -743,7 +743,20 @@ input {
   }
 
   .sidebar nav {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .sidebar nav .nav-caption {
+    width: 100%;
+    padding: 0 4px 4px;
+  }
+
+  .sidebar nav .nav-item {
+    flex: 1 0 auto;
+    justify-content: center;
+    padding: 9px 10px;
   }
 
   .sidebar-bottom {

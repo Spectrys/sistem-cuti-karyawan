@@ -5,13 +5,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { cancelLeaveAction } from "@/app/actions";
 import { getCurrentUser } from "@/lib/session";
 import { getLeaveDetail } from "@/lib/leave";
-
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  timeZone: "Asia/Jakarta",
-});
+import { formatLeaveDate } from "@/lib/date";
 
 export default async function LeaveDetailPage({ params }) {
   const user = await getCurrentUser();
@@ -47,7 +41,7 @@ export default async function LeaveDetailPage({ params }) {
         <section className="panel detail-panel">
           <div className="panel-heading"><h2>Informasi cuti</h2></div>
           <dl className="detail-list">
-            <div><dt>Tanggal</dt><dd>{dateFormatter.format(new Date(request.start_date))} – {dateFormatter.format(new Date(request.end_date))}</dd></div>
+            <div><dt>Tanggal</dt><dd>{formatLeaveDate(request.start_date, "long")} – {formatLeaveDate(request.end_date, "long")}</dd></div>
             <div><dt>Durasi</dt><dd>{request.total_days} hari</dd></div>
             <div><dt>Alasan</dt><dd>{request.reason}</dd></div>
             <div><dt>Rekan pengganti</dt><dd>{request.handover_name ?? "Tidak ada"}</dd></div>
